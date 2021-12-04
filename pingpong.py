@@ -29,7 +29,8 @@ class Ball(GameSprite):
    def __init__(self,player_image,player_x,player_y,player_speed,w,h):
       super().__init__(player_image,player_x,player_y,player_speed,w,h)
    def update(self):
-      pass
+      self.rect.x += self.speed
+      self.rect.y += self.speed
 
 
 class Player(GameSprite):
@@ -46,7 +47,7 @@ class Player(GameSprite):
 
 p1=Player('rocket.png',50,230,10,20,130,up1,down1)
 p2=Player('rocket.png',600,230,10,20,130,up2,down2)
-ball=Ball('Ball.png',330,250,10,60,60)
+ball=Ball('Ball.png',330,250,3,60,60)
 
 while game:
    for e in event.get():
