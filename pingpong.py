@@ -26,11 +26,18 @@ class GameSprite(sprite.Sprite):
       window.blit(self.image,(self.rect.x, self.rect.y))
 
 class Ball(GameSprite):
-   def __init__(self,player_image,player_x,player_y,player_speed,w,h):
+   def __init__(self,player_image,player_x,player_y,player_speed,w,h,speedx,speedy):
       super().__init__(player_image,player_x,player_y,player_speed,w,h)
+      self.speedx = speedx
+      self.speedy = speedy
    def update(self):
-      self.rect.x += self.speed
-      self.rect.y += self.speed
+      self.rect.x += self.speedx
+      self.rect.y += self.speedy
+      if ball.rect.y > 450 or ball.rect.y < 0:
+         self.speedy *= -1
+      if ball.rect.x > 710 or ball.rect.x < -10:
+         self.speedx *= -1
+
 
 
 class Player(GameSprite):
@@ -47,7 +54,7 @@ class Player(GameSprite):
 
 p1=Player('rocket.png',50,230,10,20,130,up1,down1)
 p2=Player('rocket.png',600,230,10,20,130,up2,down2)
-ball=Ball('Ball.png',330,250,3,60,60)
+ball=Ball('Ball.png',330,250,3,60,60,3,3)
 
 while game:
    for e in event.get():
