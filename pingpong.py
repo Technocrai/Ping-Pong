@@ -7,8 +7,8 @@ down2 = K_DOWN
 FPS=60
 font.init()
 font1= font.Font(None,15)
-LOSE1= font.Font(None,15).render("Player 1 lose", True,(180,0,0))
-LOSE2= font.Font(None,15).render("Player 2 lose", True,(180,0,0))
+LOSE1= font.Font(None,30).render("Player 1 lose", True,(180,0,0))
+LOSE2= font.Font(None,30).render("Player 2 lose", True,(180,0,0))
 timer =time.Clock()
 
 window= display.set_mode((700,500))
@@ -37,16 +37,19 @@ class Ball(GameSprite):
       self.rect.y += self.speedy
       if ball.rect.y > 450 or ball.rect.y < 0:
          self.speedy *= -1
-      if ball.rect.x > 710 or ball.rect.x < -40:
+      if ball.rect.x > 1510 or ball.rect.x < -1400:
+         self.rect.x=330
+         self.rect.y=250
+         self.speedy *= -1
          self.speedx *= -1
       if ball.rect.x > 690:
-         self.speedx *= -1
+         window.blit(LOSE2, (200,200))
       if ball.rect.x < -10:
+         window.blit(LOSE1, (200,200))
+      if sprite.collide_rect(p1,self):
          self.speedx *= -1
-      '''if sprite.spritecollide(p1,self,1):
+      if sprite.collide_rect(p2,self):
          self.speedx *= -1
-      if sprite.spritecollide(p2,self,1):
-         self.speedx *= -1'''
 
 
 
@@ -62,9 +65,9 @@ class Player(GameSprite):
       if keys_pressed[self.down] and self.rect.y < 470:
          self.rect.y += self.speed
 
-p1=Player('rocket.png',50,230,10,20,130,up1,down1)
-p2=Player('rocket.png',600,230,10,20,130,up2,down2)
-ball=Ball('Ball.png',330,250,3,60,60,3,3)
+p1=Player('rocket.png',50,230,10,10,20,up1,down1)
+p2=Player('rocket.png',600,230,10,10,20,up2,down2)
+ball=Ball('Ball.png',330,250,3,40,40,3,3)
 
 while game:
    for e in event.get():
