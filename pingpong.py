@@ -5,8 +5,10 @@ up2 = K_UP
 down1 = K_s
 down2 = K_DOWN
 FPS=60
-
-
+font.init()
+font1= font.Font(None,15)
+LOSE1= font.Font(None,15).render("Player 1 lose", True,(180,0,0))
+LOSE2= font.Font(None,15).render("Player 2 lose", True,(180,0,0))
 timer =time.Clock()
 
 window= display.set_mode((700,500))
@@ -35,8 +37,16 @@ class Ball(GameSprite):
       self.rect.y += self.speedy
       if ball.rect.y > 450 or ball.rect.y < 0:
          self.speedy *= -1
-      if ball.rect.x > 710 or ball.rect.x < -10:
+      if ball.rect.x > 710 or ball.rect.x < -40:
          self.speedx *= -1
+      if ball.rect.x > 690:
+         self.speedx *= -1
+      if ball.rect.x < -10:
+         self.speedx *= -1
+      '''if sprite.spritecollide(p1,self,1):
+         self.speedx *= -1
+      if sprite.spritecollide(p2,self,1):
+         self.speedx *= -1'''
 
 
 
@@ -60,6 +70,12 @@ while game:
    for e in event.get():
       if e.type == QUIT:
          game = False
+
+   if ball.rect.x > 690:
+      window.blit(LOSE2, (200,200))
+
+   if ball.rect.x < -10:
+      window.blit(LOSE1, (200,200))
    window.blit(background,(0, 0))
    p1.update()
    p2.update()
